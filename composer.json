@@ -1,7 +1,8 @@
 {
   "name": "ibitcoin/php-api",
   "type": "library",
-  "description": "",
+  "description": "Interact easily with iBitcoin.se API methods using PHP",
+  "keywords": ["php","api","bitcoin","litecoin","receive","cryptocurrency","ibitcoin.se","ibitcoin"],
   "authors": [
     {
       "name": "iBitcoin.se"
