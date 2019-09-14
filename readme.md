@@ -17,9 +17,23 @@ First install the package from Composer
 
       php compser.phar require ibitcoin/php-api
 
-Now you have to update /src/golobals.php file with your iBitcoin.se API keys.
+Now in your application you need to define your iBitcoin.se API keys as follows:
 
     define('CALLBACK_SECRET', 'e788bc3618432adds765cc637d35aeb65bde'); // iBitcoin.se Callback Secret KEY
     define('API_KEY', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...'); // iBitcoin.se API KEY
 
-Now you are ready to go!
+Full Example
+
+        declare(strict_types=1);
+        require_once __DIR__ . '/vendor/autoload.php';
+        
+        use CryptoGateway\Wallet;
+        
+        define('CALLBACK_SECRET', ''); // iBitcoin.se Callback Secret KEY
+        define('API_KEY', ''); // iBitcoin.se API KEY
+        
+        $wallet = new Wallet();
+        $wallet->setCurrency('btc');
+        
+        var_dump($wallet->walletBalance());
+        var_dump($wallet->createAddress());
