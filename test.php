@@ -5,11 +5,12 @@ require_once __DIR__ . '/src/globals.php';
 
 use CryptoGateway\Wallet;
 
+define('CALLBACK_SECRET', ''); // iBitcoin.se Callback Secret KEY
+define('API_KEY', ''); // iBitcoin.se API KEY
 
-$dd = new Wallet();
-$dd->setCurrency('btc');
+$wallet = new Wallet();
+$wallet->setCurrency('btc');
 
-var_dump($dd->walletBalance());
-var_dump($dd->privateKeyBalance('L2tg4hiFiktj5u9M8ZkSRJzfuktBPduAFTH347F8FUQuiiBLx6cY'));
-
+var_dump($wallet->walletBalance());
+var_dump($wallet->createAddress());
 
