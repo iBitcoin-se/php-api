@@ -1,0 +1,20 @@
+{
+  "name": "ibitcoin/php-api",
+  "type": "library",
+  "description": "",
+  "authors": [
+    {
+      "name": "iBitcoin.se"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.3",
+    "ext-curl": "*",
+    "ext-json": "*"
+  },
+  "autoload":{
+    "psr-4":{
+      "CryptoGateway\\":"src/"
+    }
+  }
+}
