@@ -33,9 +33,9 @@ class Base
     }
     private static function responseHandler(string $curlRes){
         $response = json_decode($curlRes,true); // iBitcoin should return response as JSON;
-        if (!$response) throw new \Exception('iBitcoin returned '.$curlRes.' instead of JSON');
+        if (!$response) throw new \Exception('invalid response: '.$curlRes);
         if (!isset($response['success'])) {
-            die (json_encode($response));
+            throw new \Exception('iBitcoin Retured Error: '.$curlRes);
         }
         return $response;
 
