@@ -15,3 +15,4 @@ $wallet->setCurrency('btc');
 var_dump($wallet->walletBalance());
 var_dump($wallet->createAddress());
 
+echo "Your BTC address is: {$wallet['address']}";

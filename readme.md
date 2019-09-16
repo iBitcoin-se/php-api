@@ -22,7 +22,10 @@ Now in your application you need to define your iBitcoin.se API keys as follows:
     define('CALLBACK_SECRET', 'e788bc3618432adds765cc637d35aeb65bde'); // iBitcoin.se Callback Secret KEY
     define('API_KEY', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...'); // iBitcoin.se API KEY
     define('API_LINK', 'https://backend.ibitcoin.se/api/');
-Full Example
+
+### Examples
+
+**Create Address**
 
         declare(strict_types=1);
         require_once __DIR__ . '/vendor/autoload.php';
@@ -36,5 +39,12 @@ Full Example
         $wallet = new Wallet();
         $wallet->setCurrency('btc');
         
-        var_dump($wallet->walletBalance());
-        var_dump($wallet->createAddress());
+        $addressInfo = $wallet->createAddress();
+        
+        echo "Your BTC address is: {$wallet['address']}";;
+        
+        
+**Callback File** 
+
+Please take a look on CallbackExample.php file
+
