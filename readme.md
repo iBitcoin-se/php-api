@@ -21,7 +21,7 @@ Now in your application you need to define your iBitcoin.se API keys as follows:
 
     define('CALLBACK_SECRET', 'e788bc3618432adds765cc637d35aeb65bde'); // iBitcoin.se Callback Secret KEY
     define('API_KEY', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9...'); // iBitcoin.se API KEY
-
+    define('API_LINK', 'https://backend.ibitcoin.se/api/');
 Full Example
 
         declare(strict_types=1);
@@ -31,6 +31,7 @@ Full Example
         
         define('CALLBACK_SECRET', ''); // iBitcoin.se Callback Secret KEY
         define('API_KEY', ''); // iBitcoin.se API KEY
+        define('API_LINK', 'https://backend.ibitcoin.se/api/');
         
         $wallet = new Wallet();
         $wallet->setCurrency('btc');

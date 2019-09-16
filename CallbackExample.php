@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/src/globals.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 function json_reponse(string $status,?string $message){
     die( json_encode(['status'=>$status,'message'=>$message]));
