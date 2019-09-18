@@ -14,7 +14,7 @@ function json_reponse(string $status,?string $message){
     die( json_encode(['status'=>$status,'message'=>$message]));
 }
 
-if ($_POST['webhookSecert'] ?? false !== CALLBACK_SECRET)  json_reponse('error','Bad Request'); // request wasn't made by iBitcoin
+if ($_POST['webhookSecret'] ?? false !== CALLBACK_SECRET)  json_reponse('error','Bad Request'); // request wasn't made by iBitcoin
 
 /*
  * You have to change the following code, it's just a simple example
