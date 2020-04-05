@@ -37,8 +37,7 @@ Now in your application you need to define your iBitcoin.se API keys as follows:
         define('API_KEY', ''); // iBitcoin.se API KEY
         define('API_LINK', 'https://backend.ibitcoin.se/api/');
         
-        $wallet = new Wallet();
-        $wallet->setCurrency('btc');
+        $wallet = new Wallet('btc');
         
         $addressInfo = $wallet->createAddress();
         
