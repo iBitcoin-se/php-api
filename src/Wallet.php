@@ -4,52 +4,47 @@ declare(strict_types=1);
 
 namespace CryptoGateway;
 
+use Exception;
+
 class Wallet
 {
-    private static $currency = null;
-    public function setCurrency(string $currency) : void{
+    private $currency = null;
+
+    public function __construct(string $currency)
+    {
         $currencies = ['btc', 'bch', 'ltc', 'bsv'];
-        if (!in_array($currency, $currencies)) throw new \Exception('Currency couldn‘t be found');
-        self::$currency = $currency;
+        if (!in_array($currency, $currencies)) throw new Exception('Currency couldn‘t be found');
+        $this->currency = $currency;
     }
 
     public function createAddress(){
-        if (is_null(self::$currency)) throw new \Exception('Currency isn‘t set');
-        $res =  Base::curl(API_LINK.self::$currency.'/createAddress');
-        return $res;
+        return Base::curl(API_LINK.$this->currency.'/createAddress');
     }
     public function addressBalance(string $address){
-        if (is_null(self::$currency)) throw new \Exception('Currency isn‘t set');
-        $res =  Base::curl(API_LINK.self::$currency.'/addressBalance' , ['address'=>$address]);
-        return $res;
+        return Base::curl(API_LINK.$this->currency.'/addressBalance' , ['address'=>$address]);
     }
     public function privateKeyBalance(string $wif){
-        if (is_null(self::$currency)) throw new \Exception('Currency isn‘t set');
-        $res =  Base::curl(API_LINK.self::$currency.'/privateKeyBalance' , ['wif'=>$wif]);
-        return $res;
+        return Base::curl(API_LINK.$this->currency.'/privateKeyBalance' , ['wif'=>$wif]);
     }
     public function getTransaction(string $txid){
-        if (is_null(self::$currency)) throw new \Exception('Currency isn‘t set');
-        $res =  Base::curl(API_LINK.self::$currency.'/getTransaction' , ['txid'=>$txid]);
-        return $res;
+        return Base::curl(API_LINK.$this->currency.'/getTransaction' , ['txid'=>$txid]);
+    }
+    public function addressTransactions(string $address, int $page){
+        return Base::curl(API_LINK.$this->currency.'/addressTransactions' , ['address'=>$address, 'page'=>$page]);
     }
     public function walletBalance(){
-        $res =  Base::curl(API_LINK.self::$currency.'/walletBalance');
-        return $res;
+        return Base::curl(API_LINK.$this->currency.'/walletBalance');
     }
     public function send(string $amount,string $walletPassword, ?string $address= null, ?string $username = null){
         $data = ['amount'=>$amount,'address'=>$address , 'username'=>$username,'password'=>$walletPassword];
-        $res =  Base::curl(API_LINK.self::$currency.'/send',$data);
-        return $res;
+        return Base::curl(API_LINK.$this->currency.'/send',$data);
     }
     public function sweep(string $address,string $wif){
         $data = ['address'=>$address , 'wif'=>$wif];
-        $res =  Base::curl(API_LINK.self::$currency.'/sweepPrivateKey',$data);
-        return $res;
+        return Base::curl(API_LINK.$this->currency.'/sweepPrivateKey',$data);
     }
     public function push(string $hex){
         $data = ['hex'=>$hex];
-        $res =  Base::curl(API_LINK.self::$currency.'/push',$data);
-        return $res;
+        return Base::curl(API_LINK.$this->currency.'/push',$data);
     }
 }
