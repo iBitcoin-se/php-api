@@ -4,17 +4,24 @@ declare(strict_types=1);
 
 namespace CryptoGateway;
 
+use Error;
 use Exception;
 
 class Wallet
 {
     private $currency = null;
 
+    private $methods = ['createAddress', 'addressBalance', 'privateKeyBalance', 'getTransaction', 'addressTransactions', 'walletBalance', 'send', 'sweepPrivateKey', 'push'];
     public function __construct(string $currency)
     {
         $currencies = ['btc', 'bch', 'ltc', 'bsv'];
-        if (!in_array($currency, $currencies)) throw new Exception('Currency couldn‘t be found');
+        if (!in_array($currency, $currencies)) throw new Error('Currency couldn‘t be found');
         $this->currency = $currency;
+    }
+
+    public function request(string $method, ?array $params = null){
+        if (!in_array($method, $this->methods)) throw new Error('Method was not found');
+
     }
 
     public function createAddress(){
