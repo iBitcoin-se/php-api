@@ -13,9 +13,10 @@ $app->post('/webhookExampleLink', function(Request $request, Response $response,
     $currency = $request->getParam('currency');
     $tcn = $request->getParam('tcn');
     $webhookSecret = $request->getParam('webhookSecret');
+    $description = $request->getParam('description');
 
     if ($webhookSecret !== 'YOUR_IBITCOIN_SECRET_FROM_YOUR_ACCOUNT') {
-        return $response->getBody()->write('{"success":false}');
+        return $response->getBody()->write(json_encode(['success' => true]));
     }
 
     if ($confirmations === 0){
@@ -26,6 +27,6 @@ $app->post('/webhookExampleLink', function(Request $request, Response $response,
         // transaction pending
     }
 
-    return $response->getBody()->write('{"success":"true"}');
+    return $response->getBody()->write(json_encode(['success' => true]));
 });
 

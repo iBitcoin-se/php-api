@@ -24,8 +24,9 @@ class Wallet
 
     }
 
-    public function createAddress(){
-        return Base::curl(API_LINK.$this->currency.'/createAddress');
+    public function createAddress(?string $description = null){
+        $data = ['description'=>$description];
+        return Base::curl(API_LINK.$this->currency.'/createAddress', $data);
     }
     public function addressBalance(string $address){
         return Base::curl(API_LINK.$this->currency.'/addressBalance' , ['address'=>$address]);
@@ -44,7 +45,7 @@ class Wallet
     }
     public function send(string $amount,string $walletPassword, ?string $address= null, ?string $username = null){
         $data = ['amount'=>$amount,'address'=>$address , 'username'=>$username,'password'=>$walletPassword];
-        return Base::curl(API_LINK.$this->currency.'/send',$data);
+        return Base::curl(API_LINK.$this->currency.'/send', $data);
     }
     public function sweep(string $address,string $wif){
         $data = ['address'=>$address , 'wif'=>$wif];
