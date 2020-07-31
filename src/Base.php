@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace CryptoGateway;
 
 
+use Exception;
+
 class Base
 {
 
@@ -13,7 +15,7 @@ class Base
         curl_setopt($ch, CURLOPT_URL, $link);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
         curl_setopt($ch, CURLOPT_CAINFO, dirname(__DIR__).'/cacert.pem');
         if (!is_null($post)){
             $post = array_merge($post ,['api_key'=>API_KEY] );
@@ -27,15 +29,16 @@ class Base
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $response = curl_exec($ch);
         $error = curl_error($ch);
-        curl_close ($ch);
-        if ($error) throw new \Exception('CURL Error:'.$error);
-        return self::responseHandler($response);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($error) throw new Exception('CURL Error:'.$error);
+        return self::responseHandler($response, $httpCode);
     }
-    private static function responseHandler(string $curlRes){
+    private static function responseHandler(string $curlRes, int $httpCode){
         $response = json_decode($curlRes,true); // iBitcoin should return response as JSON;
-        if (!$response) throw new \Exception('invalid response: '.$curlRes);
-        if (!isset($response['success'])) {
-            throw new \Exception('iBitcoin Retured Error: '.$curlRes);
+        if (!$response) throw new Exception('invalid response: '.$curlRes); // response is not json
+        if (!isset($response['success']) OR $httpCode !== 200) { // iBitcoin returns 200 http code for success responses.
+            throw new Exception('iBitcoin Retured Error: '.$curlRes);
         }
         return $response;
 

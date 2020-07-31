@@ -4,21 +4,29 @@ declare(strict_types=1);
 
 namespace CryptoGateway;
 
+use Error;
 use Exception;
 
 class Wallet
 {
     private $currency = null;
 
+    private $methods = ['createAddress', 'addressBalance', 'privateKeyBalance', 'getTransaction', 'addressTransactions', 'walletBalance', 'send', 'sweepPrivateKey', 'push'];
     public function __construct(string $currency)
     {
         $currencies = ['btc', 'bch', 'ltc', 'bsv'];
-        if (!in_array($currency, $currencies)) throw new Exception('Currency couldn‘t be found');
+        if (!in_array($currency, $currencies)) throw new Error('Currency couldn‘t be found');
         $this->currency = $currency;
     }
 
-    public function createAddress(){
-        return Base::curl(API_LINK.$this->currency.'/createAddress');
+    public function request(string $method, ?array $params = null){
+        if (!in_array($method, $this->methods)) throw new Error('Method was not found');
+
+    }
+
+    public function createAddress(?string $description = null){
+        $data = ['description'=>$description];
+        return Base::curl(API_LINK.$this->currency.'/createAddress', $data);
     }
     public function addressBalance(string $address){
         return Base::curl(API_LINK.$this->currency.'/addressBalance' , ['address'=>$address]);
@@ -37,7 +45,7 @@ class Wallet
     }
     public function send(string $amount,string $walletPassword, ?string $address= null, ?string $username = null){
         $data = ['amount'=>$amount,'address'=>$address , 'username'=>$username,'password'=>$walletPassword];
-        return Base::curl(API_LINK.$this->currency.'/send',$data);
+        return Base::curl(API_LINK.$this->currency.'/send', $data);
     }
     public function sweep(string $address,string $wif){
         $data = ['address'=>$address , 'wif'=>$wif];
