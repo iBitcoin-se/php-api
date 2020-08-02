@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * this class made to be simple, if you want to do more advanced things, feel free to extend this class.
+ */
 declare(strict_types=1);
 
 namespace CryptoGateway;
@@ -14,7 +16,7 @@ class Wallet
     private $methods = ['createAddress', 'addressBalance', 'privateKeyBalance', 'getTransaction', 'addressTransactions', 'walletBalance', 'send', 'sweepPrivateKey', 'push'];
     public function __construct(string $currency)
     {
-        $currencies = ['btc', 'bch', 'ltc', 'bsv'];
+        $currencies = ['btc', 'bch', 'ltc'];
         if (!in_array($currency, $currencies)) throw new Error('Currency couldn‘t be found');
         $this->currency = $currency;
     }
@@ -43,8 +45,9 @@ class Wallet
     public function walletBalance(){
         return Base::curl(API_LINK.$this->currency.'/walletBalance');
     }
-    public function send(string $amount,string $walletPassword, ?string $address= null, ?string $username = null){
-        $data = ['amount'=>$amount,'address'=>$address , 'username'=>$username,'password'=>$walletPassword];
+
+    public function send(string $amount,string $walletPassword, ?string $address= null, ?string $username = null, bool $fiat = false){
+        $data = ['amount'=>$amount,'address'=>$address , 'username'=>$username,'password'=>$walletPassword, 'fiat'=>$fiat];
         return Base::curl(API_LINK.$this->currency.'/send', $data);
     }
     public function sweep(string $address,string $wif){

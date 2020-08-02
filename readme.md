@@ -56,13 +56,14 @@ Please take a look on CallbackExample.php file
 #### CreateAddress
 
 ```
-https://backend.ibitcoin.se/api/btc/createAddress?api_key=[API_KEY_FROM_SETTINGS]
+POST https://backend.ibitcoin.se/api/btc/createAddress?api_key=[API_KEY_FROM_SETTINGS]&description=anything HTTP/1.1
 ```
 
 Response
 
     {
         "address": "bc1qfuqvvv5racupgk60xfjwkm5ku8j6zk7aj2as4p",
+        "expireDate": 1586070585
         "success": true,
         "time": 1586070585
     }
